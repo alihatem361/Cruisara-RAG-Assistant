@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@theme {
+  /* Deep ocean blues — primary brand surface */
+  --color-ocean-50: #f0f6fb;
+  --color-ocean-100: #dceaf5;
+  --color-ocean-200: #b7d3e9;
+  --color-ocean-400: #3f7fae;
+  --color-ocean-600: #1b4f75;
+  --color-ocean-800: #0d3b5b;
+  --color-ocean-900: #082740;
+
+  /* Sand & gold — luxury accents */
+  --color-sand-50: #fdfaf4;
+  --color-sand-100: #f7efe1;
+  --color-sand-200: #ecdcc0;
+  --color-gold-400: #c9a227;
+  --color-gold-500: #b08d1f;
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Typewriter caret shown on the message currently being streamed. */
+@keyframes caret-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  55%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.streaming-caret > *:last-child::after {
+  content: "";
+  display: inline-block;
+  width: 0.5ch;
+  height: 1em;
+  margin-left: 0.15em;
+  vertical-align: text-bottom;
+  background-color: var(--color-gold-500);
+  animation: caret-blink 1s steps(1) infinite;
+}
