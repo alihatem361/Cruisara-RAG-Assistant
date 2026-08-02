@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef, type FormEvent, type KeyboardEvent } from "react";
+import { type FormEvent, type KeyboardEvent } from "react";
 import { Send } from "lucide-react";
+import { useAutoResizeTextarea } from "@/app/hooks/useAutoResizeTextarea";
 
 interface ChatInputProps {
   value: string;
@@ -11,7 +12,7 @@ interface ChatInputProps {
 }
 
 export function ChatInput({ value, onChange, onSubmit, disabled }: ChatInputProps) {
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const textareaRef = useAutoResizeTextarea(value);
 
   const canSubmit = value.trim().length > 0 && !disabled;
 
@@ -28,15 +29,6 @@ export function ChatInput({ value, onChange, onSubmit, disabled }: ChatInputProp
     }
   }
 
-  function handleChange(next: string) {
-    onChange(next);
-    const textarea = textareaRef.current;
-    if (textarea) {
-      textarea.style.height = "auto";
-      textarea.style.height = `${Math.min(textarea.scrollHeight, 160)}px`;
-    }
-  }
-
   return (
     <form
       onSubmit={handleSubmit}
@@ -50,7 +42,7 @@ export function ChatInput({ value, onChange, onSubmit, disabled }: ChatInputProp
         ref={textareaRef}
         rows={1}
         value={value}
-        onChange={(event) => handleChange(event.target.value)}
+        onChange={(event) => onChange(event.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="Ask about tours, prices, or availability…"
         className="max-h-40 flex-1 resize-none bg-transparent px-3 py-2.5 text-ocean-900 placeholder:text-ocean-400/70 focus:outline-none"

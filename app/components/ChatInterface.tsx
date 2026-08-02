@@ -1,13 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { Compass, RotateCcw } from "lucide-react";
-import type { ChatMessage } from "@/app/lib/types";
+import { useAutoScroll } from "@/app/hooks/useAutoScroll";
+import { useChat } from "@/app/hooks/useChat";
 import { ChatInput } from "./ChatInput";
 import { MessageBubble } from "./MessageBubble";
 import { TypingIndicator } from "./TypingIndicator";
-
-const STORAGE_KEY = "cruisara-chat-history";
 
 const SUGGESTIONS = [
   "What day trips run from Hurghada?",
@@ -16,104 +14,20 @@ const SUGGESTIONS = [
   "What's included in a snorkeling trip?",
 ];
 
-function createId() {
-  return crypto.randomUUID();
-}
-
-/** Restores the conversation saved by a previous visit. Client-only. */
-function loadHistory(): ChatMessage[] {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? (JSON.parse(saved) as ChatMessage[]) : [];
-  } catch {
-    localStorage.removeItem(STORAGE_KEY);
-    return [];
-  }
-}
-
 export function ChatInterface() {
-  const [messages, setMessages] = useState<ChatMessage[]>(loadHistory);
-  const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [streamingId, setStreamingId] = useState<string | null>(null);
+  const {
+    messages,
+    input,
+    setInput,
+    isLoading,
+    streamingId,
+    sendMessage,
+    clearConversation,
+    isEmpty,
+    showTypingIndicator,
+  } = useChat();
 
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
-  }, [messages]);
-
-  useEffect(() => {
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
-  }, [messages, isLoading]);
-
-  function appendToMessage(id: string, text: string) {
-    setMessages((current) =>
-      current.map((message) =>
-        message.id === id ? { ...message, content: message.content + text } : message,
-      ),
-    );
-  }
-
-  async function sendMessage(text: string) {
-    const trimmed = text.trim();
-    if (!trimmed || isLoading) return;
-
-    const userMessage: ChatMessage = { id: createId(), role: "user", content: trimmed };
-    const history = [...messages, userMessage];
-    const assistantId = createId();
-
-    setMessages([...history, { id: assistantId, role: "assistant", content: "" }]);
-    setInput("");
-    setIsLoading(true);
-
-    try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: history }),
-      });
-
-      if (!response.ok || !response.body) {
-        throw new Error(`Request failed with status ${response.status}`);
-      }
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      setStreamingId(assistantId);
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        appendToMessage(assistantId, decoder.decode(value, { stream: true }));
-      }
-    } catch (error) {
-      console.error("Chat request failed:", error);
-      setMessages((current) =>
-        current.map((message) =>
-          message.id === assistantId
-            ? {
-                ...message,
-                content:
-                  "I'm having trouble reaching our booking desk right now. Please try again in a moment, or contact us directly at **reservations@cruisara.com**.",
-              }
-            : message,
-        ),
-      );
-    } finally {
-      setIsLoading(false);
-      setStreamingId(null);
-    }
-  }
-
-  function clearConversation() {
-    setMessages([]);
-    localStorage.removeItem(STORAGE_KEY);
-  }
-
-  const isEmpty = messages.length === 0;
-  // Typing dots show only until the first token lands.
-  const showTypingIndicator = isLoading && streamingId === null;
+  const scrollRef = useAutoScroll<HTMLDivElement>([messages, isLoading]);
 
   return (
     <div className="flex h-dvh flex-col bg-gradient-to-b from-sand-50 to-ocean-50">
