@@ -53,7 +53,11 @@ export async function POST(request: Request) {
   }
 
   const messages = body.messages;
-  if (!Array.isArray(messages) || messages.length === 0 || !messages.every(isChatMessage)) {
+  if (
+    !Array.isArray(messages) ||
+    messages.length === 0 ||
+    !messages.every(isChatMessage)
+  ) {
     return Response.json(
       { error: "`messages` must be a non-empty array of chat messages." },
       { status: 400 },
