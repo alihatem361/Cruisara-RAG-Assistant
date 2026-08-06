@@ -13,9 +13,15 @@ import {
   saveStoredMessages,
 } from "@/app/lib/chatStorage";
 
+/**
+ * Fallback contact shown on failure. Kept in an env var so the real client
+ * address lives in `.env.local` rather than in a public repository.
+ */
+const SUPPORT_EMAIL = process.env.NEXT_PUBLIC_SUPPORT_EMAIL || "demo@example.com";
+
 /** Shown in place of the assistant reply when the request or stream fails. */
 export const CHAT_ERROR_MESSAGE =
-  "I'm having trouble reaching our booking desk right now. Please try again in a moment, or contact us directly at **reservations@cruisara.com**.";
+  `I'm having trouble reaching our booking desk right now. Please try again in a moment, or contact us directly at **${SUPPORT_EMAIL}**.`;
 
 const TITLE_MAX_LENGTH = 30;
 

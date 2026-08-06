@@ -1,19 +1,27 @@
 /**
- * One-time setup: creates a Gemini File Search Store and indexes the Cruisara
- * knowledge base into it.
+ * One-time setup: creates a Gemini File Search Store and indexes a knowledge
+ * base file into it.
  *
- * Usage (Node 20.6+ loads the env file natively):
+ * Defaults to the bundled sample data so the repo runs end to end out of the
+ * box. Point KNOWLEDGE_BASE_FILE at a private file to index real data instead:
+ *
  *   node --env-file=.env.local scripts/setup-file-store.mjs
+ *   KNOWLEDGE_BASE_FILE=../private/real-data.txt npm run setup:store
  *
  * Prints the resulting store name for you to paste into .env.local.
  */
 
 import { GoogleGenAI } from "@google/genai";
 import { access, stat } from "node:fs/promises";
-import { resolve } from "node:path";
+import { basename, resolve } from "node:path";
 
-const DATA_FILE = resolve(process.cwd(), "cruisara-data.txt");
-const STORE_DISPLAY_NAME = "Cruisara Knowledge Base";
+const DEFAULT_DATA_FILE = "knowledge-base/sample-knowledge-base.txt";
+
+const DATA_FILE = resolve(
+  process.cwd(),
+  process.env.KNOWLEDGE_BASE_FILE || DEFAULT_DATA_FILE,
+);
+const STORE_DISPLAY_NAME = process.env.FILE_STORE_DISPLAY_NAME || "Travel Assistant Knowledge Base";
 
 const POLL_INTERVAL_MS = 2_000;
 const POLL_TIMEOUT_MS = 5 * 60_000;
@@ -59,7 +67,11 @@ async function main() {
     throw new Error(`Could not find ${DATA_FILE}. Run this from the project root.`);
   });
   const { size } = await stat(DATA_FILE);
-  console.log(`  Found cruisara-data.txt (${(size / 1024).toFixed(1)} KB)\n`);
+  console.log(`  Found ${basename(DATA_FILE)} (${(size / 1024).toFixed(1)} KB)`);
+  if (!process.env.KNOWLEDGE_BASE_FILE) {
+    console.log("  Using the bundled sample data. Set KNOWLEDGE_BASE_FILE to index your own.");
+  }
+  console.log();
 
   const ai = new GoogleGenAI({ apiKey });
 
@@ -83,7 +95,7 @@ async function main() {
       file: DATA_FILE,
       fileSearchStoreName: store.name,
       config: {
-        displayName: "cruisara-data.txt",
+        displayName: basename(DATA_FILE),
         mimeType: "text/plain",
       },
     });

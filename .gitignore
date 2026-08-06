@@ -42,6 +42,11 @@ yarn-error.log*
 AGENTS.md
 CLAUDE.md
 docs
+# Real client knowledge base — never commit operational data.
+# Only knowledge-base/sample-knowledge-base.txt belongs in this repo.
+cruisara-data.txt
+/private/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

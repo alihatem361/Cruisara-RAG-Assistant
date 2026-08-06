@@ -1,0 +1,229 @@
+=== TRAVEL ASSISTANT DEMO - KNOWLEDGE BASE ===
+Generated: 2026-01-01T00:00:00.000Z
+
+NOTE: This is fictional sample data for demonstration purposes only.
+It mirrors the structure of a real knowledge base so the RAG pipeline can be
+run end to end without exposing any client's operational data.
+
+=== COMPANY INFORMATION ===
+Company Name: Travel Assistant Demo
+Phone: +10000000000
+Email: demo@example.com
+WhatsApp: +10000000001
+Address: 1 Example Street, Demo City, Sample Country
+Social Media:
+  - facebook: https://example.com/facebook
+  - instagram: https://example.com/instagram
+Primary City: Demo City
+Additional Services:
+  - North Bay transfer service: EUR 5
+  - South Bay transfer service: EUR 5
+  - Airport transfer service (1pax : 4pax): EUR 25
+
+=== CITIES SERVED ===
+  - Demo City (Sample Country)
+  - Sample Harbour (Sample Country)
+  - Example Valley (Sample Country)
+
+=== TOUR CATEGORIES ===
+  - Snorkeling - Guided reef itineraries with island time, swim stops, and marine-life encounters designed for leisure travelers.
+  - Desert Excursions - Adventure excursions into the dunes: quad bikes, jeep safaris, camps, and stargazing experiences.
+  - Historical - Guided visits to archaeological sites, temples, and museums with multilingual storytelling.
+  - Private Yachts - Chartered yacht experiences for couples, families, and small groups seeking privacy and custom routing.
+
+=== TOURS ===
+Tour Name: Red Sea Snorkeling Day Trip
+Booking Link Slug: red-sea-snorkeling-day-trip
+Category: Snorkeling
+City: Demo City
+Badge: Family Friendly
+Featured: Yes
+Duration: 8 hours
+Start Time: 08:00 (Demo City local time)
+Departure / Meeting Point: From the city center of Demo City
+Guide Languages: English, German
+Price: EUR 45 per adult
+Children (5-11 years): Allowed, 50% discount off adult price
+Infants (under 5 years): Allowed, 90% discount off adult price
+Max Group Size: 30 guests
+Booking Window: Up to 2 month(s) in advance
+Same-Day Booking Cutoff: 18:00 (Demo City local time)
+Overview: Spend a full day on the water with two guided snorkeling stops, a sandbank swim, and lunch on board. Suitable for first-time snorkelers and confident swimmers alike.
+What's Included:
+  - Hotel pickup and drop-off within Demo City
+  - Snorkeling equipment (mask, snorkel, fins)
+  - Lunch on board with vegetarian options
+  - Professional multilingual guide
+What's Not Included:
+  - Extra transfer fees from outside Demo City
+  - Underwater camera rental
+  - Drinks during the meal
+  - Gratuities
+What to Bring:
+  - Towel and swimwear
+  - Sunscreen and sunglasses
+  - Comfortable shoes
+  - Cash for extras
+Itinerary:
+  - 08:00 Hotel pickup
+  - 09:30 Depart from the marina
+  - 10:30 First snorkeling stop at the coral garden
+  - 12:30 Lunch on board
+  - 14:00 Second snorkeling stop at the sandbank
+  - 16:00 Return to the marina
+Age Policy: Minimum age 5 years.
+Children under 5 years: Free of charge, must share a seat with a parent.
+Cancellation / Refund Policy: Free cancellation up to 24 hours before departure. No refund for no-shows.
+Frequently Asked Questions:
+  Q: Are hotel transfers included?
+  A: Yes, pickup and drop-off are included within Demo City.
+  Q: Do I need to know how to swim?
+  A: No. Life jackets are provided and a guide accompanies every group.
+
+Tour Name: Desert Safari by Jeep
+Booking Link Slug: desert-safari-by-jeep
+Category: Desert Excursions
+City: Demo City
+Badge: Adventure
+Featured: Yes
+Duration: 6 hours
+Start Time: 14:00 (Demo City local time)
+Departure / Meeting Point: From the city center of Demo City
+Guide Languages: English, German, French
+Price: EUR 35 per adult
+Children (5-11 years): Allowed, 50% discount off adult price
+Infants (under 5 years): Not allowed on this tour
+Max Group Size: 20 guests
+Booking Window: Up to 1 month(s) in advance
+Same-Day Booking Cutoff: 11:00 (Demo City local time)
+Overview: An afternoon in the dunes combining a jeep ride, a short camel experience, a camp dinner, and stargazing after sunset.
+What's Included:
+  - Hotel pickup and drop-off within Demo City
+  - Jeep ride with an experienced driver
+  - Camp dinner with soft drinks
+  - Stargazing session with a guide
+What's Not Included:
+  - Quad bike upgrade
+  - Alcoholic beverages
+  - Gratuities
+What to Bring:
+  - Light jacket for the evening
+  - Closed shoes
+  - Camera
+Itinerary:
+  - 14:00 Hotel pickup
+  - 15:00 Jeep ride into the dunes
+  - 17:00 Camel experience and sunset viewpoint
+  - 18:30 Dinner at the camp
+  - 20:00 Return to the hotel
+Age Policy: Minimum age 5 years. Not recommended for guests with back conditions or during pregnancy.
+Cancellation / Refund Policy: Free cancellation up to 24 hours before departure. 50% charge within 24 hours.
+Frequently Asked Questions:
+  Q: Is dinner vegetarian friendly?
+  A: Yes, vegetarian options are always available at the camp.
+
+Tour Name: Example Valley Historical Day Tour
+Booking Link Slug: example-valley-historical-day-tour
+Category: Historical
+City: Example Valley
+Badge: Best Seller
+Featured: No
+Duration: 12 hours
+Start Time: 05:00 (Demo City local time)
+Departure / Meeting Point: From the city center of Demo City
+Guide Languages: English, German, Russian
+Price: EUR 70 per adult
+Children (5-11 years): Allowed, 50% discount off adult price
+Infants (under 5 years): Allowed, 90% discount off adult price
+Max Group Size: 40 guests
+Booking Window: Up to 2 month(s) in advance
+Same-Day Booking Cutoff: 17:00 (Demo City local time)
+Overview: A full-day guided tour of Example Valley's temples and museums, travelling by air-conditioned coach with a licensed guide.
+What's Included:
+  - Round trip coach transportation
+  - Entrance tickets to listed sites
+  - Buffet lunch at a local restaurant
+  - Licensed multilingual guide
+What's Not Included:
+  - Optional river cruise
+  - Photography permits at certain sites
+  - Drinks during the meal
+What to Bring:
+  - Passport or ID
+  - Hat and sunscreen
+  - Comfortable walking shoes
+Itinerary:
+  - 05:00 Hotel pickup
+  - 09:00 Arrival at the first temple complex
+  - 12:00 Buffet lunch
+  - 14:00 Museum visit
+  - 17:00 Departure for Demo City
+Age Policy: All ages welcome.
+Cancellation / Refund Policy: Free cancellation up to 48 hours before departure.
+
+Tour Name: Private Yacht Half-Day Charter
+Booking Link Slug: private-yacht-half-day-charter
+Category: Private Yachts
+City: Demo City
+Badge: Exclusive
+Featured: Yes
+Duration: 4 hours
+Start Time: 10:00 (Demo City local time)
+Departure / Meeting Point: Demo City Marina, Gate 2
+Guide Languages: English
+Price: EUR 350 per yacht (up to 8 guests)
+Children (5-11 years): Allowed, included in the yacht price
+Infants (under 5 years): Allowed, included in the yacht price
+Max Group Size: 8 guests
+Booking Window: Up to 3 month(s) in advance
+Same-Day Booking Cutoff: 08:00 (Demo City local time)
+Overview: A private half-day charter with a dedicated crew, flexible routing, and a swim stop of your choosing.
+What's Included:
+  - Private yacht with skipper and crew
+  - Soft drinks and water
+  - Snorkeling equipment
+  - Towels on board
+What's Not Included:
+  - Hotel transfers
+  - Catering (available on request)
+  - Fuel surcharge for extended routes
+What to Bring:
+  - Swimwear and towel
+  - Sunscreen
+  - Cash for extras
+Age Policy: All ages welcome. Children must be supervised at all times.
+Cancellation / Refund Policy: Free cancellation up to 72 hours before departure. 50% charge within 72 hours.
+Frequently Asked Questions:
+  Q: Can we choose the route?
+  A: Yes, routing is agreed with the skipper before departure.
+  Q: Is catering available?
+  A: Yes, on request at an additional cost when booking.
+
+=== CUSTOMER REVIEWS ===
+Reviewer: Sample Guest A
+Tour: Red Sea Snorkeling Day Trip
+Rating: 5/5
+Comment: Well organised day out, the guide was patient with beginners.
+
+Reviewer: Sample Guest B
+Tour: Desert Safari by Jeep
+Rating: 4/5
+Comment: The stargazing was the highlight. Bring a jacket, it gets cold.
+
+Reviewer: Sample Guest C
+Tour: Private Yacht Half-Day Charter
+Rating: 5/5
+Comment: Crew was excellent and the swim stop was quiet and clean.
+
+=== GENERAL BUSINESS POLICIES ===
+Booking Confirmation: All bookings are confirmed by email within 24 hours.
+Payment: Payment is collected on the day of the tour unless stated otherwise. Cash and major cards are accepted.
+Currency: All prices are quoted in EUR.
+Cancellation: Unless a tour states otherwise, free cancellation applies up to 24 hours before departure.
+No-Show: No refund is issued for guests who do not appear at the meeting point.
+Weather: Tours cancelled by the operator for weather or safety reasons are fully refunded or rescheduled at the guest's choice.
+Pickup: Hotel pickup is included within Demo City. Transfers from outside Demo City carry an extra fee.
+Prohibited Items: Pets, drugs, and alcoholic beverages are not permitted on any tour.
+Accessibility: Guests with reduced mobility should contact the reservations team before booking so suitable arrangements can be made.
+Insurance: Guests are advised to hold their own travel insurance. The operator carries public liability insurance.
+Contact: For any question not covered here, contact demo@example.com.

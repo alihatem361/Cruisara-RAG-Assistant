@@ -4,7 +4,7 @@ An AI travel concierge for **Cruisara Tours**, a Red Sea travel agency based in 
 
 ## Features
 
-- **Grounded answers, not guesses** — every factual claim (price, duration, inclusion) is retrieved from `cruisara-data.txt` through the Gemini File Search tool before the model responds.
+- **Grounded answers, not guesses** — every factual claim (price, duration, inclusion) is retrieved from the indexed knowledge base through the Gemini File Search tool before the model responds.
 - **Real-time streaming** — responses render token-by-token via the Web Streams API, no client-side polling.
 - **Markdown-aware chat UI** — bullet lists, bold text, and links render properly through `react-markdown` + `remark-gfm`.
 - **Conversation persistence** — chat history survives a page reload via `localStorage`.
@@ -42,7 +42,7 @@ flowchart LR
         Store[(File Search Store\nfileSearchStores/...)]
     end
 
-    KB[/cruisara-data.txt/]
+    KB[/sample-knowledge-base.txt/]
 
     UI -- "POST { messages }" --> Route
     Route -- "generateContentStream\n+ fileSearch tool" --> Model
@@ -58,7 +58,7 @@ flowchart LR
 **Request flow:**
 1. The user submits a message; the full conversation history is POSTed to `app/api/chat/route.ts`.
 2. The route calls `ai.models.generateContentStream` with the Gemini File Search tool attached, pointing at the pre-built File Search Store.
-3. Gemini retrieves relevant chunks from the indexed `cruisara-data.txt`, grounds its answer in them, and streams the response back token-by-token.
+3. Gemini retrieves relevant chunks from the indexed knowledge base, grounds its answer in them, and streams the response back token-by-token.
 4. The route re-streams those tokens to the browser as a raw `text/plain` body.
 5. The client reads the stream chunk-by-chunk, appending each piece to the assistant's message for a live typewriter effect, then renders the finished text as markdown.
 
@@ -66,7 +66,7 @@ flowchart LR
 
 - **Node.js 20.6+** (for native `--env-file` support used by the setup script)
 - A **Google AI Studio API key** — [aistudio.google.com/apikey](https://aistudio.google.com/apikey)
-- The knowledge base file `cruisara-data.txt` in the project root (already included in this repo)
+- A knowledge base text file. `knowledge-base/sample-knowledge-base.txt` ships with the repo and works out of the box.
 
 ## Getting Started
 
@@ -90,23 +90,29 @@ Fill in `.env.local`:
 # Google Gen AI API key — https://aistudio.google.com/apikey
 GEMINI_API_KEY=your_api_key_here
 
-# Full resource name of the File Search Store holding cruisara-data.txt
+# Full resource name of the File Search Store holding your knowledge base
 # Format: fileSearchStores/<store-id>  (NOT the /documents/... path)
 GEMINI_FILE_STORE_NAME=
 ```
 
 ### 3. Create and index the File Search Store
 
-This project ships a one-time setup script that creates a Gemini File Search Store, uploads `cruisara-data.txt`, and waits for indexing to finish:
+This project ships a one-time setup script that creates a Gemini File Search Store, uploads the knowledge base file, and waits for indexing to finish:
 
 ```bash
 npm run setup:store
 ```
 
+By default this indexes the bundled demo data at `knowledge-base/sample-knowledge-base.txt`. To index your own knowledge base instead, point `KNOWLEDGE_BASE_FILE` at a file kept outside the repository:
+
+```bash
+KNOWLEDGE_BASE_FILE=../private/my-knowledge-base.txt npm run setup:store
+```
+
 The script prints a line like:
 
 ```
-GEMINI_FILE_STORE_NAME=fileSearchStores/cruisara-knowledge-base-xxxxxxxxxxxx
+GEMINI_FILE_STORE_NAME=fileSearchStores/travel-assistant-knowledge-base-xxxxxxxxxxxx
 ```
 
 Copy that **exact** value into `.env.local`. Do not use a path that includes `/documents/...` — that identifies a single indexed document, not the store itself, and requests will fail with `FileSearchStore name does not match expected format`.
@@ -146,8 +152,23 @@ app/
 └── page.tsx
 scripts/
 └── setup-file-store.mjs      # One-time File Search Store creation + indexing
-cruisara-data.txt             # Knowledge base source
+knowledge-base/
+└── sample-knowledge-base.txt # Demo knowledge base (fictional data)
 ```
+
+## Knowledge Base & Data Privacy
+
+The original production knowledge base is **not** included in this repository. A sample dataset is provided for demonstration purposes.
+
+`knowledge-base/sample-knowledge-base.txt` contains fictional tours, prices, and policies that mirror the real schema, so the RAG pipeline can be run end to end without publishing any client's operational data. Every phone number, email address, and price in it is made up.
+
+To run against real data, keep the file outside the repository (or anywhere matched by `.gitignore`) and pass it explicitly:
+
+```bash
+KNOWLEDGE_BASE_FILE=../private/my-knowledge-base.txt npm run setup:store
+```
+
+Client knowledge bases typically aggregate contact details, pricing, and booking policies into a single file. Even where each fact is individually public, collecting it all in a public repository makes bulk reuse trivial — so it stays out of version control.
 
 ## Screenshots
 
